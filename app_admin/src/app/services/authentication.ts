@@ -32,7 +32,7 @@ export class AuthenticationService {
   }
 
   // Register a new user
-  public register(user: { name: string; email: string; password: string }): Observable<AuthResponse> {
+  public register(user: { name: string; email: string; password: string; role?: string }): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.authUrl}/register`, user).pipe(
       tap((response: AuthResponse) => {
         if (response && response.token) {
@@ -62,10 +62,21 @@ export class AuthenticationService {
     if (this.isLoggedIn()) {
       const token = this.getToken();
       if (token) {
-        const { email, name } = JSON.parse(atob(token.split('.')[1]));
-        return { email, name };
+        const { email, name, role } = JSON.parse(atob(token.split('.')[1]));
+        return { email, name, role };
       }
     }
     return null;
+  }
+
+  // Helper method: Get the user's role string ('staff' | 'superadmin' | null)
+  public getUserRole(): string | null {
+    const user = this.getCurrentUser();
+    return user ? user.role || 'staff' : null;
+  }
+
+  // Helper method: Check if user is a SuperAdmin
+  public isSuperAdmin(): boolean {
+    return this.getUserRole() === 'superadmin';
   }
 }

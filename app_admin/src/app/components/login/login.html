@@ -16,6 +16,7 @@
       <input type="password" formControlName="password" class="form-control" placeholder="Password">
     </div>
 
-    <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Log In</button>
+    <!-- Removed [disabled] so the button is always clickable -->
+    <button type="submit" class="btn btn-primary w-100">Log In</button>
   </form>
 </div>

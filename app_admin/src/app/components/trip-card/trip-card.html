@@ -6,9 +6,18 @@
     <p class="card-text">{{ trip.length }} | {{ trip.start | date:'mediumDate' }}</p>
     <p class="card-text font-weight-bold">${{ trip.perPerson }} per person</p>
     <div class="card-text flex-grow-1" [innerHTML]="trip.description"></div>
-    <!-- Only show the Edit button if an admin is logged in -->
-    <div class="mt-3" *ngIf="isLoggedIn()">
-      <button (click)="editTrip(trip)" class="btn btn-primary btn-sm">Edit</button>
+    
+    <!-- Action buttons for logged-in users -->
+    <div class="mt-3 d-flex gap-2" *ngIf="isLoggedIn()">
+      <!-- Both Staff and SuperAdmin can Edit -->
+      <button (click)="editTrip(trip)" class="btn btn-primary btn-sm">
+        Edit
+      </button>
+
+      <!-- Only SuperAdmin can Delete -->
+      <button *ngIf="isSuperAdmin()" (click)="deleteTrip(trip.code)" class="btn btn-outline-danger btn-sm">
+        Delete
+      </button>
     </div>
   </div>
 </div>

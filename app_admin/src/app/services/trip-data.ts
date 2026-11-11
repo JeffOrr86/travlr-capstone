@@ -37,4 +37,13 @@ export class TripData {
   public updateTrip(formData: Trip): Observable<Trip> {
     return this.http.put<Trip>(`${this.url}/${formData.code}`, formData, this.getAuthHeaders());
   }
+
+  // Delete a trip by its unique code (Requires SuperAdmin Bearer token)
+  public deleteTrip(tripCode: string): Observable<any> {
+    const token = localStorage.getItem('travlr-token');
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+    return this.http.delete(`${this.url}/${tripCode}`, { headers });
+  }
 }

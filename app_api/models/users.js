@@ -13,6 +13,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        enum: ['staff', 'superadmin'],
+        default: 'staff',
+        required: true
+    },
     hash: String,
     salt: String
 });
@@ -38,6 +44,7 @@ userSchema.methods.generateJwt = function() {
         _id: this._id,
         email: this.email,
         name: this.name,
+        role: this.role, //added role property to JWT payload
         exp: parseInt(expiry.getTime() / 1000, 10),
     }, process.env.JWT_SECRET);
 };

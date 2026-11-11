@@ -1,7 +1,9 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h2>Trip Listing</h2>
-  <!-- Only show the Add button if an admin is logged in -->
-  <button *ngIf="isLoggedIn()" routerLink="/add" class="btn btn-info text-white">Add Trip</button>
+  <!-- Add Trip button only appears for SuperAdmin -->
+  <button *ngIf="isSuperAdmin()" routerLink="/add" class="btn btn-info text-white">
+    Add Trip
+  </button>
 </div>
 
 <div *ngIf="message" class="alert alert-warning">

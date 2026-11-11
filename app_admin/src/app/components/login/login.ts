@@ -27,15 +27,25 @@ export class Login implements OnInit {
   }
 
   public onSubmit(): void {
-    if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
-        next: () => {
-          this.router.navigate(['']);
-        },
-        error: (err: any) => {
-          this.errorMessage = err?.error?.message || 'Invalid email or password';
-        }
-      });
+    if (this.loginForm.invalid) {
+      this.errorMessage = 'Please provide a valid email and password.';
+      return;
     }
+
+    // Trim whitespace to avoid accidental trailing space issues
+    const credentials = {
+      email: this.loginForm.value.email.trim(),
+      password: this.loginForm.value.password
+    };
+
+    this.authService.login(credentials).subscribe({
+      next: () => {
+        this.errorMessage = '';
+        this.router.navigate(['']);
+      },
+      error: (err: any) => {
+        this.errorMessage = err?.error?.message || 'Invalid email or password';
+      }
+    });
   }
 }

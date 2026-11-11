@@ -30,6 +30,11 @@ export class TripList implements OnInit {
     return this.authService.isLoggedIn();
   }
 
+  // Check if the current user has SuperAdmin privileges
+  public isSuperAdmin(): boolean {
+    return this.authService.isSuperAdmin();
+  }
+
   private getTrips(): void {
     this.message = 'Searching for trips...';
     this.tripDataService.getTrips().subscribe({

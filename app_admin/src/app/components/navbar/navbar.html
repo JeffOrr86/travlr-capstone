@@ -1,12 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 mb-4">
   <a class="navbar-brand" routerLink="/">Travlr Getaways Admin</a>
+  
   <div class="ms-auto d-flex align-items-center">
-    <span *ngIf="authService.isLoggedIn()" class="text-light me-3">
-      Hello, {{ authService.getCurrentUser()?.name }}
-    </span>
-    <button *ngIf="authService.isLoggedIn()" (click)="logout()" class="btn btn-outline-light btn-sm">
-      Log Out
-    </button>
+    <!-- When Logged In -->
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <span class="text-light me-3 d-flex align-items-center">
+        Hello, {{ authService.getCurrentUser()?.name }}
+        <span *ngIf="authService.isSuperAdmin()" class="badge bg-warning text-dark ms-2">
+          Super Admin
+        </span>
+        <span *ngIf="!authService.isSuperAdmin()" class="badge bg-info text-dark ms-2">
+          Staff
+        </span>
+      </span>
+
+      <button (click)="logout()" class="btn btn-outline-light btn-sm">
+        Log Out
+      </button>
+    </ng-container>
+
+    <!-- When Logged Out -->
     <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="btn btn-outline-light btn-sm">
       Log In
     </a>
