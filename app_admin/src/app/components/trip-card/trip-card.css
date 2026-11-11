@@ -1,0 +1,15 @@
+/* Keep trip images the same size on each card */
+.card-img-top {
+  height: 220px;
+  object-fit: cover;
+}
+
+/* Make the card body fill the space better */
+.card {
+  overflow: hidden;
+}
+
+/* Keep the edit button sitting nicely at the bottom */
+.card-footer {
+  margin-top: auto;
+}
